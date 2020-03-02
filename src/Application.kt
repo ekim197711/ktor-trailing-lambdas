@@ -37,6 +37,13 @@ fun Application.module(testing: Boolean = false) {
         get("/spaceship") {
             call.respond(SpaceShip("round", 99))
         }
+        post("/spaceship"){
+            val spaceship = call.receive(SpaceShip::class)
+            spaceship.name += "---Returned from ktor server"
+            println("We received a spaceship $spaceship")
+            call.respond(spaceship)
+        }
+
         get<MyLocation> {
             call.respondText("Location: name=${it.name}, arg1=${it.arg1}, arg2=${it.arg2}")
         }
